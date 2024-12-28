@@ -5,10 +5,16 @@ This is the main file for the project, this file is used to call all necessary f
 """
 
 import scipy
+import sklearn 
+import pandas as pd
 from transform import transform    
 
 def main():
-    data = transform()
+    # make sure that the data has been labelled properly
+    transform()
+
+    df = pd.read_csv("labeledData.csv")
+    # data = 
     
     return False
 

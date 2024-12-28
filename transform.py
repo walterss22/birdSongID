@@ -20,49 +20,45 @@ def transform():
 
     path += "/"
 
-    # try: 
-    #     os.mkdir(os.getcwd()+"/wavData")
-    # except:
-    #     print("wavData directory already exists")
+    try:
+        file = open("labelledData.csv")
+        print("Labelled data exists")
+    except:
+        print("Labelled data does not exist, creating now")
 
-    # outpath = pjoin(os.getcwd(), 'wavData')
-    # print(outpath)
-    # print(path)
+        meta = pd.read_csv(os.getcwd() + "/bird_song/bird_songs_metadata.csv")
+        print(meta.shape)
+        df = pd.DataFrame()
 
-    if os.getcw
-
-    meta = pd.read_csv(os.getcwd() + "/bird_song/bird_songs_metadata.csv")
-    print(meta.shape)
-    df = pd.DataFrame()
-
-    for fileName in files:
-        # print(fileName[:-4])
-        # print(outpath + "/" + fileName[:-4]+".csv")
-        try:
-            print("trying")
-            rate, data = sci.read(pjoin(path, fileName))
-            temp = pd.DataFrame(data)
+        for fileName in files:
             # print(fileName[:-4])
-            temp = temp.T
-            csvName = outpath + "/" + fileName[:-4]+".csv"
+            # print(outpath + "/" + fileName[:-4]+".csv")
+            try:
+                # print("trying")
+                rate, data = sci.read(pjoin(path, fileName))
+                temp = pd.DataFrame(data)
+                # print(fileName[:-4])
+                temp = temp.T
+                # csvName = outpath + "/" + fileName[:-4]+".csv"
+                
+                #match up species name with 
+                spec = meta[meta["filename"] == fileName]["name"].values
             
-            #match up species name with 
-            spec = meta[meta["filename"] == fileName]["name"].values
-           
-            temp["species"] = spec
-            print(temp)
+                temp["species"] = spec
+                # print(temp)
 
-            print("attempt concat")
-            df = pd.concat([df, temp], ignore_index=True)
-            print(df)
+                # print("attempt concat")
+                df = pd.concat([df, temp], ignore_index=True)
+                # print(df)
 
-            # df.to_csv(csvName)
-            # df.append(temp)
-            print(df.shape)
-            print("data converted to csv")
-        except:
-            print(f"file not readable: {fileName}")
-            
-    df.to_csv("labeledData.csv") 
+                # df.to_csv(csvName)
+                # df.append(temp)
+                # print(df.shape)
+                # print("data converted to csv")
+            except:
+                print(f"file not readable: {fileName}")
+                
+        df.to_csv("labelledData.csv") 
+        print("csv created")
 
     # for file in 
