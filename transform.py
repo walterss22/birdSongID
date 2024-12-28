@@ -29,6 +29,9 @@ def transform():
     # print(outpath)
     # print(path)
 
+    meta = pd.read_csv(os.getcwd() + "/bird_song/bird_songs_metadata.csv")
+    print(meta.shape)
+    df = pd.DataFrame()
 
     for fileName in files:
         # print(fileName[:-4])
@@ -36,16 +39,28 @@ def transform():
         try:
             print("trying")
             rate, data = sci.read(pjoin(path, fileName))
-            # print("file read")
-            df = pd.DataFrame(data)
+            temp = pd.DataFrame(data)
             # print(fileName[:-4])
-            # print("data in df")
+            temp = temp.T
             csvName = outpath + "/" + fileName[:-4]+".csv"
-            # print(csvName)
-            df.to_csv(csvName)
+            
+            #match up species name with 
+            spec = meta[meta["filename"] == fileName]["name"].values
+           
+            temp["species"] = spec
+            print(temp)
+
+            df = pd.concat(df, temp)
+            print(df)
+
+            # df.to_csv(csvName)
+            # df.append(temp)
             print(df.shape)
             print("data converted to csv")
+            break
         except:
             print(f"file not readable: {fileName}")
+            break
+            
 
     # for file in 
