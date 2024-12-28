@@ -20,14 +20,16 @@ def transform():
 
     path += "/"
 
-    try: 
-        os.mkdir(os.getcwd()+"/wavData")
-    except:
-        print("wavData directory already exists")
+    # try: 
+    #     os.mkdir(os.getcwd()+"/wavData")
+    # except:
+    #     print("wavData directory already exists")
 
-    outpath = pjoin(os.getcwd(), 'wavData')
+    # outpath = pjoin(os.getcwd(), 'wavData')
     # print(outpath)
     # print(path)
+
+    if os.getcw
 
     meta = pd.read_csv(os.getcwd() + "/bird_song/bird_songs_metadata.csv")
     print(meta.shape)
@@ -50,17 +52,17 @@ def transform():
             temp["species"] = spec
             print(temp)
 
-            df = pd.concat(df, temp)
+            print("attempt concat")
+            df = pd.concat([df, temp], ignore_index=True)
             print(df)
 
             # df.to_csv(csvName)
             # df.append(temp)
             print(df.shape)
             print("data converted to csv")
-            break
         except:
             print(f"file not readable: {fileName}")
-            break
             
+    df.to_csv("labeledData.csv") 
 
     # for file in 
